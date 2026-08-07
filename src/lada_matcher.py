@@ -24,10 +24,17 @@ class LadaMatcher:
         """
         from pathlib import Path
 
-        # 1. Cargar catálogo BASE desde el Excel (todas las ladas, 2 y 3 dígitos)
+        # 1. Cargar catálogo BASE desde config/catalogo_ladas_base.csv (congelado de julio)
         if df_ladas is None:
-            excel_path = Path(__file__).parent.parent / 'data' / 'input' / 'FACTURACIONEX.xlsx'
-            df_ladas = pd.read_excel(excel_path, sheet_name='Ladas')
+            base_csv = Path(__file__).parent.parent / 'config' / 'catalogo_ladas_base.csv'
+            if not base_csv.exists():
+                raise FileNotFoundError(
+                    f"No se encontró el catálogo base de ladas: {base_csv}. "
+                    "Debe existir en config/catalogo_ladas_base.csv (314 ladas congeladas de julio)."
+                )
+            df_ladas = pd.read_csv(base_csv)
+            # Normalizar nombres de columna (CSV en minúsculas vs Excel en mayúsculas)
+            df_ladas = df_ladas.rename(columns={'lada': 'LADA', 'estado': 'Estado'})
 
         # Catálogo base: lada → lista de estados (múltiples filas por lada)
         self.lada_to_estados_base = {}

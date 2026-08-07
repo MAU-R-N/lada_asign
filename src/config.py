@@ -13,6 +13,7 @@ class Config:
         self.config = self._load_yaml("config/config.yaml")
         self.estado_plaza = self._load_yaml("config/estado_a_plaza.yaml")
         self.overrides_plazas = self._load_yaml("config/overrides_plazas.yaml")
+        self._input_excel_override = None
     
     def _load_yaml(self, rel_path: str) -> Dict[str, Any]:
         """Carga un archivo YAML"""
@@ -39,6 +40,13 @@ class Config:
                 return default
         return value
     
+    def set_input_excel(self, path: str) -> None:
+        """
+        Sobreescribe la ruta del Excel de entrada (usado por --input CLI).
+        No modifica el config.yaml para que cada mes se pase por argumento.
+        """
+        self._input_excel_override = str(path)
+
     def get_estado_to_plaza(self, estado: str) -> str:
         """Obtiene la plaza correspondiente a un estado"""
         return self.estado_plaza.get('estado_plaza', {}).get(estado)
@@ -49,7 +57,12 @@ class Config:
     
     @property
     def input_excel_path(self) -> Path:
-        """Ruta del Excel de entrada"""
+        """Ruta del Excel de entrada (override CLI si existe, si no YAML)"""
+        if self._input_excel_override:
+            path = Path(self._input_excel_override)
+            if not path.is_absolute():
+                path = self.base_path / path
+            return path
         return self.base_path / self.get('paths.input_excel')
     
     @property

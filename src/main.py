@@ -11,6 +11,12 @@ from reports import ReportGenerator
 
 def main():
     """Proceso principal de facturación"""
+    import argparse
+    
+    # Parsear argumentos CLI
+    parser = argparse.ArgumentParser(description='Pipeline de facturación mensual - Farmacias')
+    parser.add_argument('--input', type=str, help='Ruta del Excel de entrada (ej: data/input/FACTURACIONES_2.xlsx). Si no se provee, usa config.yaml')
+    args = parser.parse_args()
     
     print("=" * 60)
     print("SISTEMA DE FACTURACIÓN AUTOMATIZADA - FARMACIAS")
@@ -22,6 +28,13 @@ def main():
     project_root = Path(__file__).parent.parent
     sys.path.insert(0, str(project_root))
     config = Config(str(project_root))
+    
+    # Si se provee --input, sobreescribir la ruta del Excel de entrada
+    if args.input:
+        config.set_input_excel(args.input)
+        print(f"✓ Excel de entrada (CLI): {config.input_excel_path}")
+    else:
+        print(f"✓ Excel de entrada (config.yaml): {config.input_excel_path}")
     
     # 2. Cargar datos
     loader = ExcelLoader(config.input_excel_path)

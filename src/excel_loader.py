@@ -8,12 +8,14 @@ from typing import Dict, Tuple
 class ExcelLoader:
     """Carga y prepara los datos del Excel de entrada"""
     
-    def __init__(self, excel_path: Path):
+    def __init__(self, excel_path: Path, plazas_csv: Path = None):
         self.excel_path = excel_path
-        self.df_data = None
+        # Catálogo de ladas ya NO se lee del Excel mensual (ver LadaMatcher)
         self.df_ladas = None
         self.df_asesores = None
         self.plazas_activas = None
+        # Plazas activas congeladas en config/plazas_activas.csv (no del Excel)
+        self.plazas_csv = plazas_csv or (Path(__file__).parent.parent / 'config' / 'plazas_activas.csv')
         
     def load_all(self) -> Tuple[pd.DataFrame, pd.DataFrame, list]:
         """
@@ -45,36 +47,21 @@ class ExcelLoader:
                 errors='coerce'
             )
         
-        # Cargar catálogo de ladas
-        self.df_ladas = pd.read_excel(
-            self.excel_path,
-            sheet_name='Ladas',
-            dtype={
-                'LADA': str,  # Como string
-                'Ubicación': str,
-                'Estado': str,
-                'PLAZAS': str
-            }
-        )
-        
-        # Normalizar columna LADA (asegurar formato consistente)
-        if 'LADA' in self.df_ladas.columns:
-            # Convertir a string y rellenar con ceros a la izquierda
-            self.df_ladas['LADA'] = self.df_ladas['LADA'].astype(str).str.strip()
-        
-        # Cargar asesores para obtener plazas activas
-        self.df_asesores = pd.read_excel(
-            self.excel_path,
-            sheet_name='asesores'
-        )
-        
-        # Extraer lista de plazas activas de la columna PLAZAS del catálogo
-        plazas_col = self.df_ladas['PLAZAS'].dropna()
-        self.plazas_activas = sorted(plazas_col.unique().tolist())
+        # Plazas activas: leer desde full_asesor_estado.json (fuente dinámica del backoffice)
+        # Este JSON se actualiza mensualmente reemplazando el archivo.
+        # El CSV config/plazas_activas.csv es solo snapshot histórico de auditoría.
+        from active_plazas import get_active_plazas_loader
+        json_path = Path(__file__).parent.parent / 'full_asesor_estado.json'
+        if not json_path.exists():
+            raise FileNotFoundError(
+                f"No se encontró el JSON de roles: {json_path}. "
+                "Debe existir full_asesor_estado.json en la raíz del proyecto (fuente dinámica del backoffice)."
+            )
+        plazas_loader = get_active_plazas_loader(str(json_path))
+        self.plazas_activas = sorted(list(plazas_loader.get_plazas_activas()))
         
         print(f"✓ Data: {len(self.df_data)} filas")
-        print(f"✓ Ladas: {len(self.df_ladas)} entradas")
-        print(f"✓ Plazas activas: {len(self.plazas_activas)}")
+        print(f"✓ Plazas activas: {len(self.plazas_activas)} (desde full_asesor_estado.json)")
         
         return self.df_data, self.df_ladas, self.plazas_activas
     

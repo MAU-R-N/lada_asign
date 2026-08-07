@@ -45,6 +45,8 @@ validaciones:
   min_coincidencia_lada_percent: 95.0
   
   # Totales esperados (para validación contra Ariadne)
+  # NOTA: Estos valores cambian por mes. El pipeline los usa como ADVERTENCIA,
+  # no como bloqueo. Para cambiar de mes, usar --input en CLI sin editar este archivo.
   totales_esperados:
-    evaluadas: 9952
-    activas: 503
+    evaluadas: 9952  # Julio 2024
+    activas: 503     # Julio 2024
