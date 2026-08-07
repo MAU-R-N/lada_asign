@@ -1,0 +1,69 @@
+# Normalización de data.Asesor → plaza comparable con JSON roles
+# Usado para validar plazas directas (no-CONTACTO DIGITAL) contra el backoffice
+
+# Catálogo de estados mexicanos (para recortar sufijos)
+# Multi-palabra deben ir primero (procesamiento con prioridad de longitud)
+estados_mx:
+  - "ESTADO DE MEXICO"
+  - "BAJA CALIFORNIA SUR"
+  - "BAJA CALIFORNIA"
+  - "SAN LUIS POTOSI"
+  - "QUINTANA ROO"
+  - "NUEVO LEON"
+  - "AGUASCALIENTES"
+  - "CAMPECHE"
+  - "CHIAPAS"
+  - "CHIHUAHUA"
+  - "COAHUILA"
+  - "COLIMA"
+  - "DURANGO"
+  - "GUANAJUATO"
+  - "GUERRERO"
+  - "HIDALGO"
+  - "JALISCO"
+  - "MICHOACAN"
+  - "MORELOS"
+  - "NAYARIT"
+  - "OAXACA"
+  - "PUEBLA"
+  - "QUERETARO"
+  - "SINALOA"
+  - "SONORA"
+  - "TABASCO"
+  - "TAMAULIPAS"
+  - "TLAXCALA"
+  - "VERACRUZ"
+  - "YUCATAN"
+  - "ZACATECAS"
+
+# Alias de ciudades: data (tras quitar estado) → JSON (normalizado)
+# Necesarios cuando el nombre de ciudad difiere entre data y JSON
+alias_ciudad:
+  "POZA RICA": "POZARICA"
+  "PUEBLA FORANEAS": "PUEBLA FOR"
+  "TUXTLA FORANEAS": "TUXTLA FOR"
+  "TOLUCA FORANEAS": "TOLUCA FOR"
+  "QUERETARO FORANEAS": "QUERETARO FOR"
+  "MEXICO CENTRO": "MX CENTRO"
+  "MEXICO NORTE": "MXNTE"
+  "MEXICO ORIENTE": "MXOTE"
+  "MEXICO SUR": "MX SUR"
+  # Casos donde ciudad == estado (no hay sufijo que recortar)
+  "NUEVO LEON": "NUEVO LEON"
+  "TABASCO": "TABASCO"
+  "AGUASCALIENTES": "AGUASCALIENTES"
+  "CHIHUAHUA": "CHIHUAHUA"
+  "DURANGO": "DURANGO"
+  "OAXACA": "OAXACA"
+  "PUEBLA": "PUEBLA"
+  "QUERETARO": "QUERETARO"
+
+# Overrides especiales: casos que requieren tratamiento manual
+# Estos no siguen el patrón CIUDAD ESTADO
+overrides:
+  # XALAPA XALAPA: el segundo "XALAPA" no es estado, es ciudad duplicada
+  "XALAPA XALAPA": "XALAPA"
+  # PUEBLA FORANEAS PUEBLA FORANEAS: código duplicado
+  "PUEBLA FORANEAS PUEBLA FORANEAS": "PUEBLA FOR"
+  # Rol de sistema (widget), no es plaza facturable
+  "WIDGET NAUPHILUS": "__SISTEMA__"

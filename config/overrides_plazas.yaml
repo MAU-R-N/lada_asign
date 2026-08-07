@@ -1,0 +1,68 @@
+# Overrides de geocoding para plazas con nombres ambiguos
+# Coordenadas (lat, lon) para plazas que no se pueden geocodificar automáticamente
+
+overrides:
+  "MEXICO CENTRO ESTADO DE MEXICO ":
+    lat: 19.4326
+    lon: -99.1332
+    nota: "Ciudad de México, centro"
+  
+  "MEXICO NORTE ESTADO DE MEXICO ":
+    lat: 19.5926
+    lon: -99.0881
+    nota: "Ciudad de México, zona norte (Ecatepec aproximado)"
+  
+  "MEXICO SUR ESTADO DE MEXICO ":
+    lat: 19.2833
+    lon: -99.6500
+    nota: "Estado de México, zona sur (Toluca aproximado)"
+  
+  "MEXICO ORIENTE ESTADO DE MEXICO ":
+    lat: 19.4969
+    lon: -98.9018
+    nota: "Estado de México, zona oriente (Nezahualcóyotl aproximado)"
+  
+  "MONTERREY ORIENTE NUEVO LEON ":
+    lat: 25.6866
+    lon: -100.3161
+    nota: "Monterrey, zona oriente"
+  
+  "MONTERREY PONIENTE NUEVO LEON ":
+    lat: 25.6866
+    lon: -100.3761
+    nota: "Monterrey, zona poniente"
+  
+  "PUEBLA FORANEAS PUEBLA FORANEAS ":
+    lat: 19.0414
+    lon: -98.2063
+    nota: "Puebla, zona foráneas"
+  
+  "TOLUCA FORANEAS ESTADO DE MEXICO ":
+    lat: 19.2827
+    lon: -99.6559
+    nota: "Toluca, zona foráneas"
+  
+  "TUXTLA FORANEAS CHIAPAS ":
+    lat: 16.7516
+    lon: -93.1029
+    nota: "Tuxtla Gutiérrez, zona foráneas"
+  
+  "BAJA CALIFORNIA SUR BAJA CALIFORNIA SUR ":
+    lat: 24.1426
+    lon: -110.3128
+    nota: "La Paz, BCS (capital del estado)"
+  
+  "NUEVO LEON NUEVO LEON ":
+    lat: 25.6866
+    lon: -100.3161
+    nota: "Monterrey (capital de Nuevo León)"
+  
+  "TABASCO TABASCO ":
+    lat: 17.9892
+    lon: -92.9475
+    nota: "Villahermosa, Tabasco (capital)"
+  
+  "XALAPA XALAPA ":
+    lat: 19.5438
+    lon: -96.9102
+    nota: "Xalapa, Veracruz"

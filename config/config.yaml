@@ -1,0 +1,50 @@
+# Configuración del proyecto LADA - Facturación Farmacias
+# Este archivo es editable para parametrizar el comportamiento mensual
+
+# Rutas de archivos
+paths:
+  input_excel: "data/input/FACTURACIONEX.xlsx"
+  output_excel: "data/output/facturacion_procesada_{fecha}.xlsx"
+  geocoding_cache: "data/cache/geocoding_cache.csv"
+
+# Parámetros de clasificación
+clasificacion:
+  # Estatus que se consideran "evaluadas"
+  evaluadas_estatus:
+    - "EVALUADO"
+    - "REVISION ASESOR"
+    - "PARAMETRICO"
+  
+  # Filtro para "activas": Estatus ACTIVO y Estrellas >= umbral
+  activas_estatus: "ACTIVO"
+  activas_umbral_estrellas: 35  # 0-100 escala porcentaje
+
+# Asignación de plazas
+plaza_assignment:
+  # Plaza por defecto para números extranjeros (editable)
+  fallback_extranjero: "MEXICALI BAJA CALIFORNIA "
+  
+  # Si no hay match de lada en catálogo
+  no_identificado_label: "NO IDENTIFICADO"
+
+# Geocoding (Nominatim)
+geocoding:
+  enabled: true
+  delay_seconds: 1.0  # Delay entre requests para respetar rate limit
+  timeout_seconds: 10
+  user_agent: "LADA_Facturacion_Automation/1.0"
+
+# Diagnóstico
+diagnostico:
+  # Si aparecen valores nuevos de Estatus/Resultado/Asesor no vistos
+  accion_valores_nuevos: "advertir"  # "advertir" o "bloquear"
+  
+# Validaciones
+validaciones:
+  # % mínimo de coincidencia lada_calculada vs LADA precalculada
+  min_coincidencia_lada_percent: 95.0
+  
+  # Totales esperados (para validación contra Ariadne)
+  totales_esperados:
+    evaluadas: 9952
+    activas: 503

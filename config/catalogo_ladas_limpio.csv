@@ -1,0 +1,77 @@
+lada,estado,fuente,justificacion,estados_conflicto_originales,filas_afectadas
+55,MEXICO CENTRO,correccion_bug,"Bug: ""Mex"" mapeaba a primer match, corregido a MEXICO CENTRO","MEXICO CENTRO, Mex",1172
+223,Puebla,frecuencia_real,Estado mayoritario en datos (7 filas),"Puebla, Puebla foraneas",7
+232,Puebla,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Puebla, Veracruz",19
+236,Oaxaca,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Oaxaca, Puebla",0
+248,Puebla,frecuencia_real,Estado mayoritario en datos (26 filas),"Puebla, Puebla foraneas",26
+274,Oaxaca,frecuencia_real,Estado mayoritario en datos (10 filas),"Oaxaca, Veracruz",10
+276,Puebla,IFT_desempate,Plan de numeración IFT (desempate oficial),"Puebla, Puebla foraneas",4
+282,Puebla,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Puebla, Veracruz",2
+283,Oaxaca,frecuencia_real,Estado mayoritario en datos (11 filas),"Oaxaca, Veracruz",11
+287,Veracruz,IFT_pdf,Plan de numeración IFT (PDF oficial),"Oaxaca, Veracruz",12
+312,Coahuila,frecuencia_real,Estado mayoritario en datos (19 filas),"Coahuila, Jalisco",19
+313,Michoacan,IFT_desempate,Plan de numeración IFT (desempate oficial),"Coahuila, MICHOACAN, MORELIA MICH",2
+322,Jalisco,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Jalisco, Nayarit",55
+326,Jal,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Jal, Jalisco",0
+346,Jalisco,IFT_desempate,Plan de numeración IFT (desempate oficial),"Durango, Jalisco",2
+352,Guanajuato,IFT_desempate,Plan de numeración IFT (desempate oficial),"Leon Guanajuato, MORELIA MICH",3
+354,Jalisco,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Jalisco, MORELIA MICH",8
+378,Jal,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Jal, Jalisco",15
+393,Jalisco,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Jalisco, MORELIA MICH",0
+419,Guanajuato,IFT_desempate,Plan de numeración IFT (desempate oficial),"Leon Guanajuato, QUERETARO",7
+421,Guanajuato,IFT_desempate,Plan de numeración IFT (desempate oficial),"Leon Guanajuato, MORELIA MICH",1
+424,Jalisco,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Jalisco, MORELIA MICH",0
+427,Guanajuato,IFT_pdf,Plan de numeración IFT (PDF oficial),"Hidalgo, QUERETARO",21
+429,Guanajuato,IFT_desempate,Plan de numeración IFT (desempate oficial),"GUANAJUATO, Leon Guanajuato",1
+432,GUANAJUATO,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"GUANAJUATO, Leon Guanajuato",0
+437,Durango,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Durango, Jalisco",0
+438,Leon Guanajuato,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Leon Guanajuato, MORELIA MICH",3
+441,Hidalgo,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Hidalgo, QUERETARO",4
+442,Leon Guanajuato,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Leon Guanajuato, QUERETARO",170
+457,Durango,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Durango, Jalisco",0
+458,Aguascalientes,IFT_desempate,Plan de numeración IFT (desempate oficial),"Aguascalientes, Durango, San Luis Potosi",1
+462,GUANAJUATO,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"GUANAJUATO, Leon Guanajuato",41
+464,Jalisco,IFT_pdf,Plan de numeración IFT (PDF oficial),"GUANAJUATO, Leon Guanajuato",39
+466,Jalisco,IFT_pdf,Plan de numeración IFT (PDF oficial),"GUANAJUATO, Leon Guanajuato",2
+476,GUANAJUATO,frecuencia_real,Estado mayoritario en datos (32 filas),"GUANAJUATO, Leon Guanajuato",32
+482,San Luis Potosi,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"San Luis Potosi, Tamaulipas",0
+483,Hidalgo,IFT_desempate,Plan de numeración IFT (desempate oficial),"Hidalgo, San Luis Potosi",3
+487,Veracruz,IFT_pdf,Plan de numeración IFT (PDF oficial),"QUERETARO, San Luis Potosi",10
+488,Veracruz,IFT_pdf,Plan de numeración IFT (PDF oficial),"NUEVO LEON, SAN LUIS POTOSI SAN LUIS POTOSI ",14
+489,San Luis Potosi,IFT_desempate,Plan de numeración IFT (desempate oficial),"SAN LUIS POTOSI SAN LUIS POTOSI , Veracruz",3
+495,Jalisco,IFT_desempate,Plan de numeración IFT (desempate oficial),"Aguascalientes, Jalisco",1
+496,Aguascalientes,frecuencia_real,Estado mayoritario en datos (8 filas),"Aguascalientes, Durango, Jalisco, San Luis Potosi, zac.",8
+499,Durango,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Durango, Jalisco",0
+615,Michoacan,IFT_pdf,Plan de numeración IFT (PDF oficial),"B.C.S, Baja California, Baja California Sur",2
+629,Chihuahua,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Chihuahua, Durango",2
+636,Chih,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Chih, Chihuahua",2
+649,Chihuahua,IFT_desempate,Plan de numeración IFT (desempate oficial),"Chihuahua, Durango",1
+653,Baja California,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Baja California, Sonora",17
+671,Durango,IFT_desempate,Plan de numeración IFT (desempate oficial),"Coahuila, Durango",2
+736,Coahuila,IFT_pdf,Plan de numeración IFT (PDF oficial),"Guerrero, Hidalgo",1
+741,Guerrero,frecuencia_real,Estado mayoritario en datos (7 filas),"Guerrero, Oaxaca",7
+745,Hidalgo,IFT_desempate,Plan de numeración IFT (desempate oficial),"Guerrero, Hidalgo",4
+746,Hidalgo,IFT_desempate,Plan de numeración IFT (desempate oficial),"Hidalgo, Puebla, Veracruz",2
+748,Hidalgo,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Hidalgo, Puebla foraneas",0
+753,Guerrero,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Guerrero, MORELIA MICH",11
+757,Estado de Mexico,IFT_pdf,Plan de numeración IFT (PDF oficial),"Guerrero, Oaxaca",1
+761,Hidalgo,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Hidalgo, QUERETARO",0
+774,Hidalgo,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Hidalgo, Veracruz",0
+776,Hidalgo,frecuencia_real,Estado mayoritario en datos (7 filas),"Hidalgo, Puebla",7
+789,Hidalgo,IFT_desempate,Plan de numeración IFT (desempate oficial),"Hidalgo, Veracruz",3
+832,Tamaulipas,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Tamaulipas, Tamps",0
+833,Tamaulipas,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Tamaulipas, Veracruz",101
+842,Coahuila,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Coahuila, Durango",0
+867,Coahuila,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Coahuila, NUEVO LEON, Tamaulipas",65
+871,Coahuila,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Coahuila, Durango",70
+872,Coahuila,GT_ariadne,Ground truth de Ariadne (frecuencia dominante),"Coahuila, Durango",2
+873,Coahuila,primer_match_catalogo,Fallback: primer estado del catálogo (revisar IFT),"Coahuila, NUEVO LEON",0
+913,Chiapas,IFT_desempate,Plan de numeración IFT (desempate oficial),"Chiapas, Tabasco",1
+917,Chiapas,frecuencia_real,Estado mayoritario en datos (16 filas),"Chiapas, Tabasco",16
+923,Tabasco,frecuencia_real,Estado mayoritario en datos (8 filas),"Tabasco, Veracruz",8
+924,Oaxaca,frecuencia_real,Estado mayoritario en datos (27 filas),"Oaxaca, Veracruz",27
+932,Chiapas,frecuencia_real,Estado mayoritario en datos (10 filas),"Chiapas, Tabasco",10
+934,Chiapas,IFT_desempate,Plan de numeración IFT (desempate oficial),"Chiapas, Tabasco",5
+953,Oaxaca,frecuencia_real,Estado mayoritario en datos (14 filas),"Oaxaca, Puebla",14
+983,Chiapas,IFT_pdf,Plan de numeración IFT (PDF oficial),"Chiapas, Q. Roo, Quintana Roo",78
+994,Oaxaca,IFT_desempate,Plan de numeración IFT (desempate oficial),"Chiapas, Oaxaca",2
