@@ -45,6 +45,7 @@ Thumbs.db
 data/output/*.xlsx
 data/cache/*.csv
 *.log
+credentials.json
 
 # Temp files
 .~lock.*

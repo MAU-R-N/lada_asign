@@ -1,0 +1,482 @@
+[
+  {
+    "id": 673924,
+    "key": "TELCEL20260100117",
+    "creationUser": "PELA020128HGTRPNA8@EPACAP.COM",
+    "modificationUser": "PELA020128HGTRPNA8@EPACAP.COM",
+    "createdDate": 1785646224000,
+    "modificationDate": 1785646736000,
+    "status": {
+      "id": 32,
+      "nombre": "EVALUADO",
+      "observaciones": "",
+      "labelKey": "ui.cat.status_solicitud.assessed",
+      "idModulo": 13,
+      "initial": false,
+      "sysOnly": false,
+      "nextStatuses": []
+    },
+    "profiling": {
+      "id": 694580,
+      "data": null,
+      "membership": 48,
+      "prospect": 659591,
+      "name": "8ba81bed-8ae7-4752-8b10-86d3e0e033dc",
+      "lastUpdated": 1785646218000,
+      "profilingMgmt": 0,
+      "currentNode": null,
+      "profileBy": null,
+      "answer": "CREDITO EQUIPO",
+      "resultType": "p",
+      "profilesInLastMonth": 0,
+      "application": null,
+      "productKey": "PBAREP1"
+    },
+    "idProspect": 659591,
+    "idMembership": 48,
+    "idEmpleado": 808,
+    "counter": 100117,
+    "prospect": {
+      "id": 659591,
+      "razonSocial": "PELA020128HGTRPNA8",
+      "rfc": "PELA0201282F9",
+      "prospectContacts": [
+        {
+          "id": 654748,
+          "name": "ANGEL JARET",
+          "lastname1": "PEREZ",
+          "lastname2": "LOPEZ",
+          "role": {
+            "id": 2,
+            "name": "PROPIETARIO",
+            "labelKey": "ui.cat.prospect.contactrole.owner",
+            "required": true
+          },
+          "prospect": {
+            "id": 659591,
+            "razonSocial": "PELA020128HGTRPNA8",
+            "rfc": "PELA0201282F9",
+            "membership": {
+              "id": 48,
+              "razonSocial": null,
+              "rfc": "RDI841003QJ4",
+              "logo": null,
+              "domicilio": null,
+              "contractDate": null,
+              "personContacts": null,
+              "contract": null,
+              "user": null,
+              "estatus": null,
+              "covenantCode": null,
+              "clave": "TELCEL",
+              "numApplicationDone": 0,
+              "emailWarning": 0,
+              "background": null,
+              "buroCredential": null,
+              "sector": null,
+              "subsector": null,
+              "firstVideoImpression": false,
+              "phoneCode": null,
+              "contactPhone": null,
+              "entrevistaAgil": false,
+              "nuevoReporte": false
+            },
+            "profilingsInLastMonth": 0,
+            "numBlocked": 0,
+            "active": true
+          },
+          "contactMeans": [
+            {
+              "id": 2619756,
+              "medioContacto": {
+                "id": 5,
+                "nombre": "Telefono Fijo"
+              },
+              "dato": "4801878"
+            },
+            {
+              "id": 2619757,
+              "medioContacto": {
+                "id": 1,
+                "nombre": "Email"
+              },
+              "dato": "PELA020128HGTRPNA8@EPACAP.COM"
+            }
+          ]
+        }
+      ],
+      "empleado": {
+        "id": 808,
+        "nombre": "WIDGET",
+        "apellidoP": "EQUALITY",
+        "apellidoM": "",
+        "membresia": 0,
+        "rol": null,
+        "domicilio": null,
+        "contactos": [],
+        "estatus": null,
+        "user": null,
+        "consultasAsignadas": 0,
+        "consultasDisponibles": 0,
+        "consultasRealizadas": 0,
+        "idOficial": null,
+        "comprobante": null,
+        "convenio": null,
+        "depende": null,
+        "channel": null,
+        "origin": null
+      },
+      "profilingsInLastMonth": 0,
+      "numBlocked": 0,
+      "active": true
+    },
+    "asesor": {
+      "id": 808,
+      "nombre": "WIDGET",
+      "apellidoP": "EQUALITY",
+      "apellidoM": "",
+      "membresia": 48,
+      "rol": null,
+      "domicilio": null,
+      "contactos": [],
+      "estatus": null,
+      "user": null,
+      "consultasAsignadas": 0,
+      "consultasDisponibles": 9542825,
+      "consultasRealizadas": 0,
+      "idOficial": null,
+      "comprobante": null,
+      "convenio": null,
+      "depende": null,
+      "channel": null,
+      "origin": null
+    },
+    "product": null,
+    "json": null,
+    "steps": 2,
+    "result": "Mantiene riesgo 6",
+    "stars": "0",
+    "resultHolder": null,
+    "revisionAsesor": false
+  },
+  {
+    "id": 673919,
+    "key": "TELCEL20260100116",
+    "creationUser": "MECA991102HCSNLN08@EPACAP.COM",
+    "modificationUser": "MECA991102HCSNLN08@EPACAP.COM",
+    "createdDate": 1785644224000,
+    "modificationDate": 1785644859000,
+    "status": {
+      "id": 32,
+      "nombre": "EVALUADO",
+      "observaciones": "",
+      "labelKey": "ui.cat.status_solicitud.assessed",
+      "idModulo": 13,
+      "initial": false,
+      "sysOnly": false,
+      "nextStatuses": []
+    },
+    "profiling": {
+      "id": 694575,
+      "data": null,
+      "membership": 48,
+      "prospect": 659588,
+      "name": "cdd71dae-2ba0-468c-af57-c5efdb2f7c9e",
+      "lastUpdated": 1785644218000,
+      "profilingMgmt": 0,
+      "currentNode": null,
+      "profileBy": null,
+      "answer": "CREDITO EQUIPO",
+      "resultType": "p",
+      "profilesInLastMonth": 0,
+      "application": null,
+      "productKey": "PBAREP1"
+    },
+    "idProspect": 659588,
+    "idMembership": 48,
+    "idEmpleado": 808,
+    "counter": 100116,
+    "prospect": {
+      "id": 659588,
+      "razonSocial": "MECA991102HCSNLN08",
+      "rfc": "MECA991102688",
+      "prospectContacts": [
+        {
+          "id": 654745,
+          "name": "ANGEL DE JESUS",
+          "lastname1": "MENDOZA",
+          "lastname2": "CLEMENTE",
+          "role": {
+            "id": 2,
+            "name": "PROPIETARIO",
+            "labelKey": "ui.cat.prospect.contactrole.owner",
+            "required": true
+          },
+          "prospect": {
+            "id": 659588,
+            "razonSocial": "MECA991102HCSNLN08",
+            "rfc": "MECA991102688",
+            "membership": {
+              "id": 48,
+              "razonSocial": null,
+              "rfc": "RDI841003QJ4",
+              "logo": null,
+              "domicilio": null,
+              "contractDate": null,
+              "personContacts": null,
+              "contract": null,
+              "user": null,
+              "estatus": null,
+              "covenantCode": null,
+              "clave": "TELCEL",
+              "numApplicationDone": 0,
+              "emailWarning": 0,
+              "background": null,
+              "buroCredential": null,
+              "sector": null,
+              "subsector": null,
+              "firstVideoImpression": false,
+              "phoneCode": null,
+              "contactPhone": null,
+              "entrevistaAgil": false,
+              "nuevoReporte": false
+            },
+            "profilingsInLastMonth": 0,
+            "numBlocked": 0,
+            "active": true
+          },
+          "contactMeans": [
+            {
+              "id": 2619744,
+              "medioContacto": {
+                "id": 5,
+                "nombre": "Telefono Fijo"
+              },
+              "dato": "4801871"
+            },
+            {
+              "id": 2619745,
+              "medioContacto": {
+                "id": 1,
+                "nombre": "Email"
+              },
+              "dato": "MECA991102HCSNLN08@EPACAP.COM"
+            }
+          ]
+        }
+      ],
+      "empleado": {
+        "id": 808,
+        "nombre": "WIDGET",
+        "apellidoP": "EQUALITY",
+        "apellidoM": "",
+        "membresia": 0,
+        "rol": null,
+        "domicilio": null,
+        "contactos": [],
+        "estatus": null,
+        "user": null,
+        "consultasAsignadas": 0,
+        "consultasDisponibles": 0,
+        "consultasRealizadas": 0,
+        "idOficial": null,
+        "comprobante": null,
+        "convenio": null,
+        "depende": null,
+        "channel": null,
+        "origin": null
+      },
+      "profilingsInLastMonth": 0,
+      "numBlocked": 0,
+      "active": true
+    },
+    "asesor": {
+      "id": 808,
+      "nombre": "WIDGET",
+      "apellidoP": "EQUALITY",
+      "apellidoM": "",
+      "membresia": 48,
+      "rol": null,
+      "domicilio": null,
+      "contactos": [],
+      "estatus": null,
+      "user": null,
+      "consultasAsignadas": 0,
+      "consultasDisponibles": 9542825,
+      "consultasRealizadas": 0,
+      "idOficial": null,
+      "comprobante": null,
+      "convenio": null,
+      "depende": null,
+      "channel": null,
+      "origin": null
+    },
+    "product": null,
+    "json": null,
+    "steps": 2,
+    "result": "Mantiene riesgo 6",
+    "stars": "0",
+    "resultHolder": null,
+    "revisionAsesor": false
+  },
+  {
+    "id": 673916,
+    "key": "TELCEL20260100115",
+    "creationUser": "VAMJ871119HSRLRN07@EPACAP.COM",
+    "modificationUser": "VAMJ871119HSRLRN07@EPACAP.COM",
+    "createdDate": 1785643636000,
+    "modificationDate": 1785644009000,
+    "status": {
+      "id": 32,
+      "nombre": "EVALUADO",
+      "observaciones": "",
+      "labelKey": "ui.cat.status_solicitud.assessed",
+      "idModulo": 13,
+      "initial": false,
+      "sysOnly": false,
+      "nextStatuses": []
+    },
+    "profiling": {
+      "id": 694572,
+      "data": null,
+      "membership": 48,
+      "prospect": 659586,
+      "name": "2141eef2-1cca-4dad-a8cf-c758aefe251c",
+      "lastUpdated": 1785643630000,
+      "profilingMgmt": 0,
+      "currentNode": null,
+      "profileBy": null,
+      "answer": "CREDITO EQUIPO",
+      "resultType": "p",
+      "profilesInLastMonth": 0,
+      "application": null,
+      "productKey": "PBAREP1"
+    },
+    "idProspect": 659586,
+    "idMembership": 48,
+    "idEmpleado": 808,
+    "counter": 100115,
+    "prospect": {
+      "id": 659586,
+      "razonSocial": "VAMJ871119HSRLRN07",
+      "rfc": "VAMJ871119A32",
+      "prospectContacts": [
+        {
+          "id": 654743,
+          "name": "JUAN ULISES",
+          "lastname1": "VALLE",
+          "lastname2": "MIRANDA",
+          "role": {
+            "id": 2,
+            "name": "PROPIETARIO",
+            "labelKey": "ui.cat.prospect.contactrole.owner",
+            "required": true
+          },
+          "prospect": {
+            "id": 659586,
+            "razonSocial": "VAMJ871119HSRLRN07",
+            "rfc": "VAMJ871119A32",
+            "membership": {
+              "id": 48,
+              "razonSocial": null,
+              "rfc": "RDI841003QJ4",
+              "logo": null,
+              "domicilio": null,
+              "contractDate": null,
+              "personContacts": null,
+              "contract": null,
+              "user": null,
+              "estatus": null,
+              "covenantCode": null,
+              "clave": "TELCEL",
+              "numApplicationDone": 0,
+              "emailWarning": 0,
+              "background": null,
+              "buroCredential": null,
+              "sector": null,
+              "subsector": null,
+              "firstVideoImpression": false,
+              "phoneCode": null,
+              "contactPhone": null,
+              "entrevistaAgil": false,
+              "nuevoReporte": false
+            },
+            "profilingsInLastMonth": 0,
+            "numBlocked": 0,
+            "active": true
+          },
+          "contactMeans": [
+            {
+              "id": 2619736,
+              "medioContacto": {
+                "id": 5,
+                "nombre": "Telefono Fijo"
+              },
+              "dato": "4801870"
+            },
+            {
+              "id": 2619737,
+              "medioContacto": {
+                "id": 1,
+                "nombre": "Email"
+              },
+              "dato": "VAMJ871119HSRLRN07@EPACAP.COM"
+            }
+          ]
+        }
+      ],
+      "empleado": {
+        "id": 808,
+        "nombre": "WIDGET",
+        "apellidoP": "EQUALITY",
+        "apellidoM": "",
+        "membresia": 0,
+        "rol": null,
+        "domicilio": null,
+        "contactos": [],
+        "estatus": null,
+        "user": null,
+        "consultasAsignadas": 0,
+        "consultasDisponibles": 0,
+        "consultasRealizadas": 0,
+        "idOficial": null,
+        "comprobante": null,
+        "convenio": null,
+        "depende": null,
+        "channel": null,
+        "origin": null
+      },
+      "profilingsInLastMonth": 0,
+      "numBlocked": 0,
+      "active": true
+    },
+    "asesor": {
+      "id": 808,
+      "nombre": "WIDGET",
+      "apellidoP": "EQUALITY",
+      "apellidoM": "",
+      "membresia": 48,
+      "rol": null,
+      "domicilio": null,
+      "contactos": [],
+      "estatus": null,
+      "user": null,
+      "consultasAsignadas": 0,
+      "consultasDisponibles": 9542825,
+      "consultasRealizadas": 0,
+      "idOficial": null,
+      "comprobante": null,
+      "convenio": null,
+      "depende": null,
+      "channel": null,
+      "origin": null
+    },
+    "product": null,
+    "json": null,
+    "steps": 2,
+    "result": "Baja a riesgo 5",
+    "stars": "-1",
+    "resultHolder": null,
+    "revisionAsesor": false
+  }
+]
