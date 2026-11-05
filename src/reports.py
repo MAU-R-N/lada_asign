@@ -24,82 +24,151 @@ class ReportGenerator:
     
     def generate_evaluadas(self, df_data: pd.DataFrame) -> pd.DataFrame:
         """
-        Genera reporte de entrevistas evaluadas por plaza
+        Genera reporte de entrevistas evaluadas por plaza con desglose por estatus
         
         Args:
             df_data: DataFrame con datos resueltos
             
         Returns:
-            DataFrame con columnas: Plaza, Count
+            DataFrame con columnas: Plaza, EVALUADO, PARAMETRICO, REVISION ASESOR, EVALUADAS
         """
         # Filtrar por estatus de evaluadas
         mask = df_data['Estatus'].isin(self.evaluadas_estatus)
         df_eval = df_data[mask]
         
-        # Agrupar por plaza_calculada
-        report = df_eval.groupby('plaza_calculada').size().reset_index(name='EVALUADAS')
-        report = report.sort_values('plaza_calculada')
+        # Rellenar plaza_calculada vacías con un placeholder
+        df_eval = df_eval.copy()
+        df_eval['plaza_calculada'] = df_eval['plaza_calculada'].fillna('SIN_PLAZA_ASIGNADA')
         
-        # Agregar total
+        # Crear pivot table con desglose por estatus
+        pivot = pd.crosstab(
+            df_eval['plaza_calculada'], 
+            df_eval['Estatus'],
+            margins=False
+        ).reset_index()
+        
+        # Asegurar que todas las columnas de estatus existan
+        for estatus in ['EVALUADO', 'PARAMETRICO', 'REVISION ASESOR']:
+            if estatus not in pivot.columns:
+                pivot[estatus] = 0
+        
+        # Calcular total EVALUADAS por plaza
+        pivot['EVALUADAS'] = pivot[['EVALUADO', 'PARAMETRICO', 'REVISION ASESOR']].sum(axis=1)
+        
+        # Ordenar columnas
+        pivot = pivot[['plaza_calculada', 'EVALUADO', 'PARAMETRICO', 'REVISION ASESOR', 'EVALUADAS']]
+        pivot = pivot.sort_values('plaza_calculada')
+        
+        # Agregar fila de totales
         total = pd.DataFrame([{
             'plaza_calculada': 'Total general',
-            'EVALUADAS': len(df_eval)
+            'EVALUADO': pivot['EVALUADO'].sum(),
+            'PARAMETRICO': pivot['PARAMETRICO'].sum(),
+            'REVISION ASESOR': pivot['REVISION ASESOR'].sum(),
+            'EVALUADAS': pivot['EVALUADAS'].sum()
         }])
-        report = pd.concat([report, total], ignore_index=True)
+        report = pd.concat([pivot, total], ignore_index=True)
         
         return report
     
     def generate_activas(self, df_data: pd.DataFrame) -> pd.DataFrame:
         """
-        Genera reporte de entrevistas activas por plaza
+        Genera reporte de entrevistas activas por plaza con desglose por avance (estrellas)
         
         Args:
             df_data: DataFrame con datos resueltos
             
         Returns:
-            DataFrame con columnas: Plaza, Count
+            DataFrame con columnas: Plaza, ACTIVAS_ALTO (>35), ACTIVAS_MEDIO (1-35), ACTIVAS_SIN_AVANCE (0), ACTIVAS_TOTAL
         """
-        # Filtrar por estatus activo Y estrellas >= umbral
-        mask = (df_data['Estatus'] == self.activas_estatus) & \
-               (df_data['Estrellas'] >= self.activas_umbral)
-        df_act = df_data[mask]
+        # Filtrar por estatus ACTIVO
+        df_act = df_data[df_data['Estatus'] == self.activas_estatus].copy()
         
-        # Agrupar por plaza_calculada
-        report = df_act.groupby('plaza_calculada').size().reset_index(name='ACTIVAS')
-        report = report.sort_values('plaza_calculada')
+        # Rellenar plaza_calculada vacías
+        df_act['plaza_calculada'] = df_act['plaza_calculada'].fillna('SIN_PLAZA_ASIGNADA')
         
-        # Agregar total
+        # Clasificar por estrellas
+        df_act['categoria_avance'] = pd.cut(
+            df_act['Estrellas'],
+            bins=[-0.1, 0, 35, 100],
+            labels=['SIN_AVANCE', 'MEDIO', 'ALTO'],
+            include_lowest=True
+        )
+        
+        # Crear pivot table
+        pivot = pd.crosstab(
+            df_act['plaza_calculada'],
+            df_act['categoria_avance'],
+            margins=False
+        ).reset_index()
+        
+        # Asegurar que todas las categorías existan
+        for cat in ['ALTO', 'MEDIO', 'SIN_AVANCE']:
+            if cat not in pivot.columns:
+                pivot[cat] = 0
+        
+        # Renombrar columnas
+        pivot = pivot.rename(columns={
+            'ALTO': 'ACTIVAS >35★',
+            'MEDIO': 'ACTIVAS <35★', 
+            'SIN_AVANCE': 'ACTIVAS 0★'
+        })
+        
+        # Calcular total
+        pivot['ACTIVAS_TOTAL'] = pivot[['ACTIVAS >35★', 'ACTIVAS <35★', 'ACTIVAS 0★']].sum(axis=1)
+        
+        # Ordenar columnas
+        pivot = pivot[['plaza_calculada', 'ACTIVAS >35★', 'ACTIVAS <35★', 'ACTIVAS 0★', 'ACTIVAS_TOTAL']]
+        pivot = pivot.sort_values('plaza_calculada')
+        
+        # Agregar fila de totales
         total = pd.DataFrame([{
             'plaza_calculada': 'Total general',
-            'ACTIVAS': len(df_act)
+            'ACTIVAS >35★': pivot['ACTIVAS >35★'].sum(),
+            'ACTIVAS <35★': pivot['ACTIVAS <35★'].sum(),
+            'ACTIVAS 0★': pivot['ACTIVAS 0★'].sum(),
+            'ACTIVAS_TOTAL': pivot['ACTIVAS_TOTAL'].sum()
         }])
-        report = pd.concat([report, total], ignore_index=True)
+        report = pd.concat([pivot, total], ignore_index=True)
         
         return report
     
     def generate_detalle_facturacion(self, df_evaluadas: pd.DataFrame, 
                                     df_activas: pd.DataFrame) -> pd.DataFrame:
         """
-        Genera detalle de facturaciรณn combinando evaluadas y activas
+        Genera detalle de facturación combinando evaluadas y activas
         
         Args:
-            df_evaluadas: Reporte de evaluadas
-            df_activas: Reporte de activas
+            df_evaluadas: Reporte de evaluadas con desglose por estatus
+            df_activas: Reporte de activas con desglose por avance
             
         Returns:
-            DataFrame con evaluadas y activas por plaza
+            DataFrame con evaluadas (desglosadas por estatus) y activas (desglosadas por avance) por plaza
         """
         # Merge de evaluadas y activas
         report = pd.merge(
             df_evaluadas, 
             df_activas, 
             on='plaza_calculada', 
-            how='outer'
+            how='left'  # Left para mantener todas las evaluadas, activas puede ser 0
         ).fillna(0)
         
-        # Convertir a int
-        report['EVALUADAS'] = report['EVALUADAS'].astype(int)
-        report['ACTIVAS'] = report['ACTIVAS'].astype(int)
+        # Convertir a int todas las columnas numéricas
+        numeric_cols = [
+            'EVALUADO', 'PARAMETRICO', 'REVISION ASESOR', 'EVALUADAS',
+            'ACTIVAS >35★', 'ACTIVAS <35★', 'ACTIVAS 0★', 'ACTIVAS_TOTAL'
+        ]
+        for col in numeric_cols:
+            if col in report.columns:
+                report[col] = report[col].astype(int)
+        
+        # Ordenar columnas: plaza, evaluadas (desglosadas), activas (desglosadas)
+        cols_order = [
+            'plaza_calculada',
+            'EVALUADO', 'PARAMETRICO', 'REVISION ASESOR', 'EVALUADAS',
+            'ACTIVAS >35★', 'ACTIVAS <35★', 'ACTIVAS 0★', 'ACTIVAS_TOTAL'
+        ]
+        report = report[[c for c in cols_order if c in report.columns]]
         
         # Ordenar (Total general al final)
         mask_total = report['plaza_calculada'] == 'Total general'

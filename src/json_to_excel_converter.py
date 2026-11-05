@@ -62,6 +62,26 @@ class JSONToExcelConverter:
         partes = [p for p in [nombre, apellido_p, apellido_m] if p]
         return ' '.join(partes)
     
+    def _extract_prospecto_nombre(self, prospect: dict) -> str:
+        """
+        Extrae el nombre completo del prospecto (cliente)
+        
+        Args:
+            prospect: Dict con datos del prospecto
+            
+        Returns:
+            Nombre completo como string
+        """
+        if not prospect:
+            return ''
+        
+        nombre = prospect.get('nombre', '')
+        apellido_p = prospect.get('apellidoP', '')
+        apellido_m = prospect.get('apellidoM', '')
+        
+        partes = [p for p in [nombre, apellido_p, apellido_m] if p]
+        return ' '.join(partes)
+    
     def _timestamp_to_datetime(self, timestamp_ms: int) -> datetime:
         """
         Convierte timestamp en milisegundos a datetime
@@ -119,9 +139,17 @@ class JSONToExcelConverter:
             created_date_ms = entrevista.get('createdDate')
             fecha = self._timestamp_to_datetime(created_date_ms)
             
+            # Prospecto (nombre del cliente)
+            prospecto = self._extract_prospecto_nombre(prospect)
+            
+            # Extraer año y mes para filtrado posterior
+            anio = fecha.year if fecha else None
+            mes = fecha.month if fecha else None
+            
             # LADA, ESTADO, PLAZA se dejan vacíos - el sistema los asignará
             row = {
                 'Clave': clave,
+                'Prospecto': prospecto,  # Agregado para compatibilidad con formato manual
                 'Asesor': asesor,
                 'Contactos': contactos,
                 'Estatus': estatus,
@@ -130,7 +158,9 @@ class JSONToExcelConverter:
                 'LADA': '',  # Se asignará por phone_extractor
                 'ESTADO': '',  # Se asignará por lada_matcher
                 'PLAZA': '',  # Se asignará por plaza_matcher
-                'Fecha': fecha
+                'Fecha': fecha,
+                'Año': anio,
+                'Mes': mes
             }
             
             rows.append(row)

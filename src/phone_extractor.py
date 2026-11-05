@@ -39,11 +39,17 @@ class PhoneExtractor:
             # (esto elimina códigos de país como +52 o 52 o 01)
             if len(digits) >= 10:
                 return digits[-10:]
+            # Si tiene 9 dígitos, también es válido (lada + número corto)
+            elif len(digits) == 9:
+                return digits
         
-        # Estrategia 2: Fallback - buscar cualquier secuencia de 10+ dígitos
+        # Estrategia 2: Fallback - buscar cualquier secuencia de 9+ dígitos
         all_digits = ''.join(self.PATTERN_DIGITS.findall(contactos))
         if len(all_digits) >= 10:
             return all_digits[-10:]
+        elif len(all_digits) == 9:
+            # Números de 9 dígitos son válidos (ej: 552019446 = lada 55 + 2019446)
+            return all_digits
         
         return None
     
@@ -52,12 +58,12 @@ class PhoneExtractor:
         Extrae la lada del número (primeros 2 o 3 dígitos)
         
         Args:
-            phone: Número de 10 dígitos
+            phone: Número de 9 o 10 dígitos
             
         Returns:
-            Lada de 2 o 3 dígitos (se probará primero 2, luego 3)
+            Tupla con (lada_2_digitos, lada_3_digitos) para que el matcher pruebe ambas
         """
-        if not phone or len(phone) != 10:
+        if not phone or len(phone) not in [9, 10]:
             return None
         
         # Retornamos las opciones, el matcher probará ambas

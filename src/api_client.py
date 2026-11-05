@@ -71,17 +71,15 @@ class NauphilusAPIClient:
         """
         token = self._get_token()
         
-        # Formato con horas como en el ejemplo original
-        fecha_inicio_str = fecha_inicio.strftime("%Y-%m-%d %H:%M:%S")
-        fecha_fin_str = fecha_fin.strftime("%Y-%m-%d %H:%M:%S")
+        # Formato DD-MM-YYYY como espera la API real
+        fecha_inicio_str = fecha_inicio.strftime("%d-%m-%Y")
+        fecha_fin_str = fecha_fin.strftime("%d-%m-%Y")
         
-        # Construir URL - httpx maneja el encoding automáticamente
-        base_url_path = (
+        # Endpoint correcto: getSolitudesByDates (no getSolitudesByTime)
+        url = (
             f"{self.base_url}/memberships/{self.membership_id}/core/creditApp"
-            f"/getSolitudesByTime/{self.endpoint_id}"
+            f"/getSolitudesByDates/{self.endpoint_id}/{fecha_inicio_str}/{fecha_fin_str}"
         )
-        
-        url = f"{base_url_path}/{fecha_inicio_str}/{fecha_fin_str}"
         
         print(f"Descargando desde: {fecha_inicio_str}")
         print(f"             hasta: {fecha_fin_str}")
@@ -92,6 +90,7 @@ class NauphilusAPIClient:
             headers={
                 "Authorization": f"Bearer {token}",
                 "Content-Type": "application/json",
+                "Accept": "application/json, text/plain, */*",
             },
             timeout=300.0  # 5 minutos para meses con muchos datos
         )

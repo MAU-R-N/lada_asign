@@ -9,43 +9,74 @@ from excel_loader import ExcelLoader
 from resolver import ContactoDigitalResolver
 from reports import ReportGenerator
 
-def main():
-    """Proceso principal de facturación"""
-    import argparse
+def process_excel(config: Config, excel_path: str) -> str:
+    """
+    Procesa un Excel con el sistema LADA completo
     
-    # Parsear argumentos CLI
-    parser = argparse.ArgumentParser(description='Pipeline de facturación mensual - Farmacias')
-    parser.add_argument('--input', type=str, help='Ruta del Excel de entrada (ej: data/input/FACTURACIONES_2.xlsx). Si no se provee, usa config.yaml')
-    args = parser.parse_args()
-    
+    Args:
+        config: Objeto de configuración
+        excel_path: Ruta al Excel de entrada
+        
+    Returns:
+        Ruta al Excel procesado generado
+    """
     print("=" * 60)
     print("SISTEMA DE FACTURACIÓN AUTOMATIZADA - FARMACIAS")
     print("=" * 60)
-    
-    # 1. Cargar configuración (usar directorio del proyecto, no src/)
-    import sys
-    from pathlib import Path
-    project_root = Path(__file__).parent.parent
-    sys.path.insert(0, str(project_root))
-    config = Config(str(project_root))
-    
-    # Si se provee --input, sobreescribir la ruta del Excel de entrada
-    if args.input:
-        config.set_input_excel(args.input)
-        print(f"✓ Excel de entrada (CLI): {config.input_excel_path}")
-    else:
-        print(f"✓ Excel de entrada (config.yaml): {config.input_excel_path}")
+    print(f"✓ Excel de entrada: {excel_path}")
     
     # 2. Cargar datos
     loader = ExcelLoader(config.input_excel_path)
     df_data, df_ladas, plazas_activas = loader.load_all()
+    
+    # 2.5. Filtrar por mes objetivo (excluir registros de otros meses)
+    print("\n" + "=" * 60)
+    print("FILTRADO POR MES")
+    print("=" * 60)
+    
+    # Detectar si hay columnas Año/Mes (de descarga automática)
+    if 'Año' in df_data.columns and 'Mes' in df_data.columns:
+        # Contar registros por mes
+        df_con_mes = df_data[df_data['Mes'].notna()]
+        
+        if len(df_con_mes) > 0:
+            month_counts = df_con_mes['Mes'].value_counts().sort_index()
+            print("Distribución de registros por mes:")
+            for mes, count in month_counts.items():
+                print(f"  Mes {int(mes):02d}: {count} registros")
+            
+            # Mes objetivo = mes con más registros
+            target_month = month_counts.idxmax()
+            target_year = df_con_mes[df_con_mes['Mes'] == target_month]['Año'].mode()[0]
+            
+            print(f"\n✓ Mes objetivo detectado: {int(target_year)}-{int(target_month):02d}")
+            
+            # Filtrar registros de otros meses
+            mask_mes_correcto = (df_data['Año'] == target_year) & (df_data['Mes'] == target_month)
+            df_otros_meses = df_data[~mask_mes_correcto & df_data['Mes'].notna()]
+            
+            if len(df_otros_meses) > 0:
+                print(f"\n⚠️  Excluyendo {len(df_otros_meses)} registros de otros meses:")
+                otros_meses_counts = df_otros_meses.groupby(['Año', 'Mes']).size()
+                for (anio, mes), count in otros_meses_counts.items():
+                    print(f"   - {int(anio)}-{int(mes):02d}: {count} registros")
+                
+                # Filtrar
+                df_data = df_data[mask_mes_correcto | df_data['Mes'].isna()]
+                print(f"✓ Dataset filtrado: {len(df_data)} registros del mes objetivo")
+            else:
+                print("✓ No hay registros de otros meses - dataset limpio")
+        else:
+            print("⚠️  No se detectaron fechas válidas - procesando todos los registros")
+    else:
+        print("ℹ️  Columnas Año/Mes no encontradas - asumiendo dataset manual (sin filtrado)")
     
     # 3. Diagnóstico inicial
     print("\n" + "=" * 60)
     print("DIAGNÓSTICO INICIAL")
     print("=" * 60)
     diag = loader.get_diagnostico()
-    print(f"Total filas: {diag['total_filas']}")
+    print(f"Total filas: {len(df_data)}")
     print(f"Estatus únicos: {diag['estatus_unicos']}")
     print(f"Asesor 'CONTACTO DIGITAL ' (tolera espacios): {df_data['Asesor'].apply(ContactoDigitalResolver._is_contacto_digital).sum()}")
     print(f"Estrellas rango: {diag['estrellas_min']:.0f} - {diag['estrellas_max']:.0f}")
@@ -87,11 +118,17 @@ def main():
     df_auditoria = generator.generate_auditoria_matching(df_resolved)
     
     total_eval = df_evaluadas[df_evaluadas['plaza_calculada']=='Total general']['EVALUADAS'].values[0]
-    total_act = df_activas[df_activas['plaza_calculada']=='Total general']['ACTIVAS'].values[0]
+    total_act_alto = df_activas[df_activas['plaza_calculada']=='Total general']['ACTIVAS >35★'].values[0]
+    total_act_medio = df_activas[df_activas['plaza_calculada']=='Total general']['ACTIVAS <35★'].values[0]
+    total_act_sin = df_activas[df_activas['plaza_calculada']=='Total general']['ACTIVAS 0★'].values[0]
+    total_act = df_activas[df_activas['plaza_calculada']=='Total general']['ACTIVAS_TOTAL'].values[0]
     sin_match_json = df_auditoria[df_auditoria['match_json'] == 'No (revisar)']['filas'].sum() if len(df_auditoria) > 0 else 0
     
     print(f"✓ Evaluadas: {total_eval}")
     print(f"✓ Activas: {total_act}")
+    print(f"  - ACTIVAS >35★: {total_act_alto}")
+    print(f"  - ACTIVAS <35★: {total_act_medio}")
+    print(f"  - ACTIVAS 0★: {total_act_sin}")
     print(f"✓ Casos para revisión: {len(df_revision)}")
     print(f"✓ Asesores auditados: {len(df_auditoria)} ({sin_match_json} filas sin match JSON)")
     
@@ -120,7 +157,7 @@ def main():
     print("=" * 60)
     
     # Crear directorio de salida
-    output_dir = project_root / 'data' / 'output'
+    output_dir = config.base_path / 'data' / 'output'
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Nombre del archivo con fecha
@@ -174,11 +211,41 @@ def main():
     
     print(f"✓ Excel exportado: {output_path}")
     
+    # Agregar hoja dinámica con fórmulas
+    print("\nAgregando hoja con fórmulas dinámicas...")
+    try:
+        from dynamic_reports import add_dynamic_reports_to_excel
+        add_dynamic_reports_to_excel(output_path)
+    except Exception as e:
+        print(f"⚠ No se pudo agregar hoja dinámica: {e}")
+    
     print("\n" + "=" * 60)
     print("PROCESO COMPLETADO")
     print("=" * 60)
     
-    return output_path
+    return str(output_path)
+
+def main():
+    """Punto de entrada CLI - Parsea argumentos y llama a process_excel()"""
+    import argparse
+    import sys
+    
+    # Parsear argumentos CLI
+    parser = argparse.ArgumentParser(description='Pipeline de facturación mensual - Farmacias')
+    parser.add_argument('--input', type=str, help='Ruta del Excel de entrada (ej: data/input/FACTURACIONES_2.xlsx). Si no se provee, usa config.yaml')
+    args = parser.parse_args()
+    
+    # Cargar configuración
+    project_root = Path(__file__).parent.parent
+    sys.path.insert(0, str(project_root))
+    config = Config(str(project_root))
+    
+    # Si se provee --input, sobreescribir la ruta del Excel de entrada
+    if args.input:
+        config.set_input_excel(args.input)
+    
+    # Procesar Excel
+    return process_excel(config, config.input_excel_path)
 
 if __name__ == '__main__':
     try:
